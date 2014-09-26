@@ -27,7 +27,7 @@ public class ArchivedListActivity extends ItemListActivity {
         ListView listView = (ListView) findViewById(R.id.listView2);
 		listView.setAdapter(itemAdapter);
 		
-listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+		listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
         
 		listView.setMultiChoiceModeListener(new MultiChoiceModeListener() {
 			
@@ -57,7 +57,7 @@ listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
 		    public boolean onCreateActionMode(ActionMode mode, Menu menu) {
 		        // Inflate the menu for the CAB
 		        MenuInflater inflater = mode.getMenuInflater();
-		        inflater.inflate(R.menu.selection_menu, menu);
+		        inflater.inflate(R.menu.archive_menu, menu);
 		        positions.clear();
 		        return true;
 		    }
@@ -88,7 +88,7 @@ listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
 			@Override
 			public void update() {
 				list.clear();
-				Collection<ItemModel> items = ItemListManager.getItemModelList().getItems();
+				Collection<ItemModel> items = ItemListManager.getItemModelList().getArchives();
 				list.addAll(items);
 				itemAdapter.notifyDataSetChanged();
 			}

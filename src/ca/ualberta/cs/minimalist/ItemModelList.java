@@ -27,6 +27,7 @@ public class ItemModelList {
 		return listeners;
 	}
 	public Collection<ItemModel> getItems() {
+		System.out.println("getItenms: "+items);
 		return items;		
 	}
 	public Collection<ItemModel> getArchives() {

@@ -46,6 +46,7 @@ public class ItemListActivity extends Activity {
         setContentView(R.layout.activity_main);
 		ItemListManager.initManager(this.getApplicationContext());
 		Collection<ItemModel> items = ItemListManager.getItemModelList().getItems();
+		System.out.println(items);
 		final ArrayList<ItemModel> list = new ArrayList<ItemModel>(items);
         itemAdapter = new customAdapter(this, R.layout.item_info, list);
         final ListView listView = (ListView) findViewById(R.id.listView1);
@@ -70,6 +71,8 @@ public class ItemListActivity extends Activity {
 		            	ArrayList<ItemModel> itemsToArchive = ItemListManager.getItemModelList().getSelectItems(positions);
 		            	ItemListManager.getManager().archiveMany(itemsToArchive);
 		            	ItemListManager.getItemModelList().deleteSelectedItems(positions);
+		            	mode.finish();
+		            case R.id.email:
 		            	mode.finish();
 		            default:
 		                return false;
@@ -151,6 +154,7 @@ public class ItemListActivity extends Activity {
         	viewArchives(item);
         	return true;
         }
+        
         return super.onOptionsItemSelected(item);
     }
     public void viewArchives(MenuItem menu) {

@@ -35,6 +35,7 @@ public class ItemListManager {
 	static public ItemModelList getItemModelList() {
 		if (itemModelList == null) {
 			itemModelList = getManager().loadFromFile();
+			System.out.println("a" + itemModelList);
 			itemModelList.addListener(new Listener() {					
 				@Override
 				public void update() {
@@ -65,23 +66,26 @@ public class ItemListManager {
 	}
 	
 	protected ItemModelList loadFromFile() {
-		
+		System.out.println("HREE");
+		ItemModelList imt1 = new ItemModelList();
 		try {
 			FileInputStream fis = context.openFileInput(FILENAME);
 			InputStreamReader irs = new InputStreamReader(fis);
+			// from javacreed.com gson example 09/22/2014
+			Gson gson = new GsonBuilder().create();
+			ItemModelList target = new ItemModelList();
+			//String json = gson.toJson(target); // serializes target to Json
+			ItemModelList imt = gson.fromJson(irs, ItemModelList.class);
+			// deserializes json into target2
+			return imt;
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		// from javacreed.com gson example 09/22/2014
-		Gson gson = new GsonBuilder().create();
-		ItemModelList target = new ItemModelList();
-		String json = gson.toJson(target); // serializes target to Json
-		ItemModelList imt = gson.fromJson(json, ItemModelList.class); // deserializes json into target2
-					 
-		
-		return imt;
+
+		return imt1;			 
+		//System.out.println(imt.size());
 	}
 	protected void saveToFile(ItemModelList imt) {
 		try {
