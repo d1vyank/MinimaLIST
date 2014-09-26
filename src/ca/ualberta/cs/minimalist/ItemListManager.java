@@ -48,6 +48,9 @@ public class ItemListManager {
 	public void addItemModel(ItemModel item) {
 		getItemModelList().addItem(item);
 	}
+	public void addArchiveModel(ItemModel item) {
+		getItemModelList().addArchive(item);
+	}
 	
 	
 	public ItemListManager(Context context) {
@@ -62,25 +65,22 @@ public class ItemListManager {
 	}
 	
 	protected ItemModelList loadFromFile() {
-		ItemModelList imt= new ItemModelList();
-		ArrayList<ItemModel> items = null;
+		
 		try {
-			
 			FileInputStream fis = context.openFileInput(FILENAME);
 			InputStreamReader irs = new InputStreamReader(fis);
-			// from javacreed.com gson example 09/22/2014
-			Gson gson = new GsonBuilder().create();
-			items = gson.fromJson(irs, new TypeToken<ArrayList<ItemModel>>() {}.getType());
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		if (items != null) {
-			for(ItemModel item : items) {
-				imt.addItem(item);
-			}
-		}	
+		// from javacreed.com gson example 09/22/2014
+		Gson gson = new GsonBuilder().create();
+		ItemModelList target = new ItemModelList();
+		String json = gson.toJson(target); // serializes target to Json
+		ItemModelList imt = gson.fromJson(json, ItemModelList.class); // deserializes json into target2
+					 
+		
 		return imt;
 	}
 	protected void saveToFile(ItemModelList imt) {
@@ -90,13 +90,23 @@ public class ItemListManager {
 			OutputStreamWriter osw = new OutputStreamWriter(fos);
 			// from javacreed.com gson example 09/22/2014
 			Gson gson = new GsonBuilder().create();
-			gson.toJson(imt.getItems(), osw);
+			gson.toJson(imt, osw);
 			osw.flush();
 			osw.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+	protected void archiveMany(ArrayList<ItemModel> items) {
+		for (ItemModel i : items) {
+			addArchiveModel(i); 
+		}
+	}
+	protected void unarchiveMany(ArrayList<ItemModel> items) {
+		for (ItemModel i : items) {
+			addItemModel(i);
 		}
 	}
 }

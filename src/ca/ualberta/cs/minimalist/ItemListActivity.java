@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.List;
 
 
+
 import ca.ualberta.cs.minimalist.ItemModel;
 
 
@@ -13,6 +14,7 @@ import ca.ualberta.cs.minimalist.ItemModel;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
@@ -65,7 +67,9 @@ public class ItemListActivity extends Activity {
 		                mode.finish(); // Action picked, so close the CAB
 		                return true;
 		            case R.id.archive:
-		            	
+		            	ArrayList<ItemModel> itemsToArchive = ItemListManager.getItemModelList().getSelectItems(positions);
+		            	ItemListManager.getManager().archiveMany(itemsToArchive);
+		            	ItemListManager.getItemModelList().deleteSelectedItems(positions);
 		            	mode.finish();
 		            default:
 		                return false;
@@ -144,11 +148,16 @@ public class ItemListActivity extends Activity {
             return true;
         }
         if (id == R.id.view_archives) {
+        	viewArchives(item);
         	return true;
         }
         return super.onOptionsItemSelected(item);
     }
-    
+    public void viewArchives(MenuItem menu) {
+		Toast.makeText(this, "Archives", Toast.LENGTH_SHORT).show();
+		Intent intent = new Intent(ItemListActivity.this, ArchivedListActivity.class);
+		startActivity(intent);
+	}
 
 	private void checkButtonClick() {
 		Button myButton = (Button) findViewById(R.id.addItem);

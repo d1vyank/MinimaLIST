@@ -21,7 +21,7 @@ public class ArchivedListActivity extends ItemListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.archived_activity);
 		ItemListManager.initManager(this.getApplicationContext());
-		Collection<ItemModel> items = ItemListManager.getItemModelList().getItems();
+		Collection<ItemModel> items = ItemListManager.getItemModelList().getArchives();
 		final ArrayList<ItemModel> list = new ArrayList<ItemModel>(items);
 		final ArrayAdapter<ItemModel> itemAdapter = new ArrayAdapter<ItemModel>(this, android.R.layout.simple_list_item_1, list);
         ListView listView = (ListView) findViewById(R.id.listView2);
@@ -38,13 +38,15 @@ listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
 		        switch (item.getItemId()) {
 		            case R.id.delete:
 		            	if(positions != null) {
-		            		ItemListManager.getItemModelList().deleteSelectedItems(positions);
+		            		ItemListManager.getItemModelList().deleteSelectedArchives(positions);
 		            	}
 		                mode.finish(); // Action picked, so close the CAB
 		                return true;
 		            case R.id.unarchive:
+		            	ArrayList<ItemModel> itemsToArchive = ItemListManager.getItemModelList().getSelectArchives(positions);
+		            	ItemListManager.getManager().unarchiveMany(itemsToArchive);
+		            	ItemListManager.getItemModelList().deleteSelectedArchives(positions);
 		            	mode.finish();
-		            	//unarchive
 		            default:
 		                return false;
 		        }

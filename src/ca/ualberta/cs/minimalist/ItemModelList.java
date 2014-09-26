@@ -12,9 +12,11 @@ import java.util.List;
 
 public class ItemModelList {
 	protected ArrayList<ItemModel> items = null;
+	protected ArrayList<ItemModel> archives = null;
 	protected transient ArrayList<Listener> listeners = null;
 	public ItemModelList() {
-		items = new ArrayList<ItemModel>();		
+		items = new ArrayList<ItemModel>();	
+		archives = new ArrayList<ItemModel>();
 		listeners = new ArrayList<Listener>();
 	}
 	
@@ -27,13 +29,26 @@ public class ItemModelList {
 	public Collection<ItemModel> getItems() {
 		return items;		
 	}
-	public ItemModelList getSelectItems(List<Integer> positions) {
-		ItemModelList it = new ItemModelList();
+	public Collection<ItemModel> getArchives() {
+		return archives;
+	}
+	public ArrayList<ItemModel> getSelectItems(List<Integer> positions) {
+		ArrayList<ItemModel> it = new ArrayList<ItemModel>();
 		for (int i : positions)
-			it.addItem(items.get(i));
+			it.add(items.get(i));
 		return it;
 	}
-
+	public ArrayList<ItemModel> getSelectArchives(List<Integer> positions) {
+		ArrayList<ItemModel> it = new ArrayList<ItemModel>();
+		for (int i : positions)
+			it.add(archives.get(i));
+		return it;
+	}
+	public void addArchive(ItemModel newItem) {
+		archives.add(newItem);
+		notifyListeners();
+	}
+	
 	public void addItem(ItemModel newItem) {
 		items.add(newItem);
 		notifyListeners();
@@ -60,15 +75,7 @@ public class ItemModelList {
 		}
 	}
 	
-	public void clearSelections() {
-		for(ItemModel i:items) {
-			i.selectItem(false);
-		}
-	}
-	public void selectItem(int index) {
-		ItemModel im=items.get(index);
-		im.selectItem(true);
-	}
+
 	
 	private void notifyListeners() {
 		for (Listener  listener : getListeners()) {
@@ -81,6 +88,11 @@ public class ItemModelList {
 		notifyListeners();
 	}
 	
+	public void removeArchive(ItemModel delItem) {
+		archives.remove(delItem);
+		notifyListeners();
+	}
+	
 	public void deleteSelectedItems(List<Integer> positions) {
 		ArrayList<ItemModel> it = new ArrayList<ItemModel>();
 		for (int i : positions)
@@ -89,12 +101,21 @@ public class ItemModelList {
 		notifyListeners();
 
 	}
-	
+	public void deleteSelectedArchives(List<Integer> positions) {
+		ArrayList<ItemModel> it = new ArrayList<ItemModel>();
+		for (int i: positions) {
+			it.add(archives.get(i));
+		}
+		archives.removeAll(it);
+		notifyListeners();
+	}
 	
 	public int size() {
 		return items.size();
 	}
-
+	public int archiveSize() {
+		return archives.size();
+	}
 
 	public void addListener(Listener l) {
 		getListeners().add(l);
