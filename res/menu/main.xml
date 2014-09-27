@@ -2,15 +2,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="ca.ualberta.cs.minimalist.MainActivity" >
 
-    <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:showAsAction="never"
-        android:title="@string/action_settings"/>
+ 
     <item
         android:id="@+id/view_archives"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="View Archives"/>
+    <item
+        android:id="@+id/Summary"
         android:orderInCategory="101"
         android:showAsAction="never"
-        android:title="view_archives"/>
-
+        android:title="View Summary"/>
+    <item
+        android:id="@+id/delete_allItems"
+        android:orderInCategory="102"
+        android:showAsAction="never"
+        android:title="Delete All Items"/>
+	<item
+        android:id="@+id/delete_allArchives"
+        android:orderInCategory="103"
+        android:showAsAction="never"
+        android:title="Delete All Archives"/>
+	<item
+        android:id="@+id/email_all"
+        android:orderInCategory="104"
+        android:showAsAction="never"
+        android:title="Email All Items"/>
 </menu>

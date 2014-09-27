@@ -1,16 +1,9 @@
 package ca.ualberta.cs.minimalist;
 
-import java.io.FileNotFoundException;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 
 
@@ -21,14 +14,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 public class customAdapter extends ArrayAdapter<ItemModel> {
 
 	private ArrayList<ItemModel> items;
     private LayoutInflater inflater;
-	//private static final String FILENAME = "Items.sav";
-
     
 	public customAdapter(Context context, int textViewResourceId, 
 			ArrayList<ItemModel> items) {
@@ -81,8 +72,7 @@ public class customAdapter extends ArrayAdapter<ItemModel> {
 				else {
 					ItemListManager.getItemModelList().uncheckItem(item);
 				}
-				//item.checkItem(cb.isChecked());
-				//ItemListManager.saveToFile();
+				
 			}  
 		});  
 		

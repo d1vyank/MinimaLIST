@@ -34,9 +34,17 @@ public class ItemModelList {
 		return archives;
 	}
 	public ArrayList<ItemModel> getSelectItems(List<Integer> positions) {
+		if (positions == null)
+			return items;
 		ArrayList<ItemModel> it = new ArrayList<ItemModel>();
-		for (int i : positions)
-			it.add(items.get(i));
+		for (int i : positions) {
+			try{	
+				it.add(items.get(i));
+			}
+			catch (IndexOutOfBoundsException iob) {
+				iob.printStackTrace();
+			}
+		}	
 		return it;
 	}
 	public ArrayList<ItemModel> getSelectArchives(List<Integer> positions) {
@@ -102,6 +110,14 @@ public class ItemModelList {
 		notifyListeners();
 
 	}
+	public void deleteAllItems() {
+		items.clear();
+		notifyListeners();
+	}
+	public void deleteAllArchives() {
+		archives.clear();
+		notifyListeners();
+	}
 	public void deleteSelectedArchives(List<Integer> positions) {
 		ArrayList<ItemModel> it = new ArrayList<ItemModel>();
 		for (int i: positions) {
@@ -111,11 +127,27 @@ public class ItemModelList {
 		notifyListeners();
 	}
 	
-	public int size() {
-		return items.size();
+	public int checkedSize() {
+		int count = 0;
+		for (ItemModel i : items) {
+			if(i.isChecked()==true)
+				count++;
+		}
+		return count;
 	}
-	public int archiveSize() {
-		return archives.size();
+	public int uncheckedSize() {
+		return (items.size() - checkedSize());
+	}
+	public int checkedArchiveSize() {
+		int count = 0;
+		for (ItemModel i : archives) {
+			if(i.isChecked()==true)
+				count++;
+		}
+		return count;
+	}
+	public int uncheckedArchiveSize() {
+		return (archives.size() - checkedArchiveSize());
 	}
 
 	public void addListener(Listener l) {

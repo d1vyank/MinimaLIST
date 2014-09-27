@@ -1,18 +1,14 @@
 package ca.ualberta.cs.minimalist;
 
 import java.io.FileInputStream;
-
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-
 import android.content.Context;
 
 
@@ -35,7 +31,6 @@ public class ItemListManager {
 	static public ItemModelList getItemModelList() {
 		if (itemModelList == null) {
 			itemModelList = getManager().loadFromFile();
-			System.out.println("a" + itemModelList);
 			itemModelList.addListener(new Listener() {					
 				@Override
 				public void update() {
@@ -73,19 +68,13 @@ public class ItemListManager {
 			InputStreamReader irs = new InputStreamReader(fis);
 			// from javacreed.com gson example 09/22/2014
 			Gson gson = new GsonBuilder().create();
-			ItemModelList target = new ItemModelList();
-			//String json = gson.toJson(target); // serializes target to Json
 			ItemModelList imt = gson.fromJson(irs, ItemModelList.class);
-			// deserializes json into target2
 			return imt;
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 		return imt1;			 
-		//System.out.println(imt.size());
 	}
 	protected void saveToFile(ItemModelList imt) {
 		try {
